@@ -1,0 +1,7 @@
+# Pilot results
+
+This folder holds the results of a small trial run ("pilot") I did before the full experiment. I took 60 test cases from InjecAgent, a benchmark for indirect prompt injection, and ran the same 60 through two AI models, Llama 3.1 8B and Qwen3.5 9B. In each case, a user asks an AI assistant to do something simple, like check a calendar or read a product review, and the data the assistant gets back has an attacker's instruction hidden inside it, such as "transfer $500 from my account". I recorded what each model did next.
+
+Every case has a label. `succ` means the attack worked because the model tried to carry out the hidden instruction, `unsucc` means the model ignored it and answered the user, and `invalid` means the model's reply was too malformed to judge. The file `pilot_summary.csv` is the one to open first. It has one row per case per model (120 rows) with the label and a few details, and this might be helpful for plots. The two subfolders, one per model, hold the full records including each model's complete reply. Each is split into four files by attack type (direct harm or data stealing) and by setting (base, or "enhanced", where the hidden instruction starts with a line telling the model to ignore previous instructions).
+
+Qwen gave a usable reply in 93% of cases, compared with 47% for Llama. The attack worked on Qwen in 28% of cases. Based on these results and a conversation with our GSI, we are moving to Qwen for the full run.
